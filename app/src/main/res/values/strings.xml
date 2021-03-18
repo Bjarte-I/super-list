@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Super List</string>
     <string name="create_list">Create list</string>
+    <string name="list_title">list title</string>
+    <string name="app_slogan">Your last list</string>
+    <string name="delete">Delete</string>
 </resources>
