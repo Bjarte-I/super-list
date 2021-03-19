@@ -27,9 +27,5 @@ class MainActivity : AppCompatActivity() {
                 et_todo_list_title.text.clear()
             }
         }
-
-        /*button_delete.setOnClickListener {
-            todoListAdapter.deleteList()
-        }*/
     }
 }
