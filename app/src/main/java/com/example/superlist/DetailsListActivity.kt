@@ -21,9 +21,9 @@ class DetailsListActivity : AppCompatActivity() {
         button_create_todo.setOnClickListener {
             val todoTitle = et_details_todo_title.text.toString()
             if(todoTitle.isNotEmpty()) {
-                val list = DetailsTodoItem(todoTitle, false)
-                detailsListAdapter.addTodo(list)
-                et_todo_list_title.text.clear()
+                val todo = DetailsTodoItem(todoTitle, false)
+                detailsListAdapter.addTodo(todo)
+                et_details_todo_title.text.clear()
             }
         }
     }

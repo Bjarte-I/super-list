@@ -4,4 +4,6 @@
     <string name="list_title">list title</string>
     <string name="app_slogan">Your last list</string>
     <string name="delete">Delete</string>
+    <string name="todo_title">Todo title</string>
+    <string name="create_todo">create todo</string>
 </resources>

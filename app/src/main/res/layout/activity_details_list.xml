@@ -41,11 +41,9 @@
         android:paddingEnd="8dp"
         android:paddingBottom="8dp"
         app:srcCompat="@android:drawable/ic_input_add"
-        tools:layout_editor_absoluteX="335dp"
-        tools:layout_editor_absoluteY="654dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/create_list" />
+        android:contentDescription="@string/create_todo" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_details_list_container"
@@ -61,9 +59,10 @@
         android:id="@+id/et_details_todo_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/list_title"
+        android:hint="@string/todo_title"
+        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/button_create_todo"
-        />
+        android:autofillHints="" />
 </androidx.constraintlayout.widget.ConstraintLayout>
