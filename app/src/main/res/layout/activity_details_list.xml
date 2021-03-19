@@ -4,32 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:padding="18dp">
+    tools:context=".DetailsListActivity"
+    android:paddingStart="18dp"
+    android:paddingEnd="18dp"
+    android:paddingTop="18dp"
+    android:paddingBottom="18dp">
 
     <TextView
-        android:id="@+id/tv_main_title"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
+        android:id="@+id/tv_list_details_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="25sp"
+        />
 
-    <TextView
-        android:id="@+id/tv_main_slogan"
-        android:layout_width="wrap_content"
+    <ProgressBar
+        android:id="@+id/pb_details_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:scaleY="2"
         android:layout_height="wrap_content"
-        android:paddingBottom="18dp"
-        android:text="@string/app_slogan"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_list_details_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_create_list"
+        android:id="@+id/button_create_todo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -45,23 +48,22 @@
         android:contentDescription="@string/create_list" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_list_container"
+        android:id="@+id/rv_details_list_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_main_slogan"
-        app:layout_constraintBottom_toTopOf="@id/et_todo_list_title"
+        app:layout_constraintTop_toBottomOf="@+id/pb_details_progress"
+        app:layout_constraintBottom_toTopOf="@id/et_details_todo_title"
         />
 
     <EditText
-        android:id="@+id/et_todo_list_title"
+        android:id="@+id/et_details_todo_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/list_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button_create_list"
+        app:layout_constraintEnd_toStartOf="@id/button_create_todo"
         />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
