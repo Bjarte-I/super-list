@@ -19,15 +19,15 @@ class TodoListAdapter(private val lists:MutableList<ListItem>) : RecyclerView.Ad
         notifyItemInserted(lists.size - 1)
     }
 
-    fun deleteList (list: ListItem) {
-        lists.remove(list)
-        notifyDataSetChanged()
-    }
-
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val curList = lists[position]
         holder.itemView.apply {
             tv_list_item_title.text = curList.title
+        }
+
+        holder.itemView.button_delete.setOnClickListener() {
+            lists.removeAt(position)
+            notifyDataSetChanged()
         }
     }
 

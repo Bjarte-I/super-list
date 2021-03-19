@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        button_delete.setOnClickListener {
+        /*button_delete.setOnClickListener {
             todoListAdapter.deleteList()
-        }
+        }*/
     }
 }
