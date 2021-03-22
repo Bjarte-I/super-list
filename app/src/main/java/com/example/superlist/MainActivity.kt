@@ -2,11 +2,9 @@ package com.example.superlist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.superlist.models.ListItem
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +26,5 @@ class MainActivity : AppCompatActivity() {
                 et_todo_list_title.text.clear()
             }
         }
-
     }
 }

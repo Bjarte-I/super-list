@@ -14,21 +14,23 @@ import kotlinx.android.synthetic.main.activity_details_list.view.*
 class DetailsListActivity : AppCompatActivity() {
 
     private lateinit var detailsListAdapter: DetailsListAdapter
-    private val listItems = ListItemsSingleton.singletonListItems.ListItems
+    private val listItems = ListItemsSingleton.singletonListItems.ListItems //All the lists that are added and stored in the singleton object.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details_list)
-        val listPosition:Int = intent.getIntExtra("EXTRA_LIST_ITEM_POSITION", -1)
+        val listPosition:Int = intent.getIntExtra("EXTRA_LIST_ITEM_POSITION", -1) //Retrieve the index position of the list we are in.
 
         detailsListAdapter = DetailsListAdapter(listPosition)
 
         rv_details_list_container.adapter = detailsListAdapter
         rv_details_list_container.layoutManager = LinearLayoutManager(this)
 
+        tv_todo_list_title.text = listItems[listPosition].title
+
         button_details_back.setOnClickListener {
             Intent(this, MainActivity::class.java).also {
-                ContextCompat.startActivity(this, it, null)
+                ContextCompat.startActivity(this, it, null) //Start the main activity
             }
         }
 
@@ -36,11 +38,10 @@ class DetailsListActivity : AppCompatActivity() {
             val todoTitle = et_details_todo_title.text.toString()
             if(todoTitle.isNotEmpty()) {
                 val todo = DetailsTodoItem(todoTitle, false)
-                detailsListAdapter.addTodo(todo)
+                detailsListAdapter.addTodo(todo) //Add the todos through the recycler adapter
                 et_details_todo_title.text.clear()
             }
         }
 
-        tv_todo_list_title.text = listItems[listPosition].title
     }
 }

@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_details_list.view.*
 import kotlinx.android.synthetic.main.details_todo_list.view.*
 import kotlinx.android.synthetic.main.item_todo_list.view.tv_todo_title
 
-class DetailsListAdapter(private val listItemPosition:Int) : RecyclerView.Adapter<DetailsListAdapter.ListViewHolder>() {
+class DetailsListAdapter(listItemPosition:Int) : RecyclerView.Adapter<DetailsListAdapter.ListViewHolder>() {
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private val listItems = ListItemsSingleton.singletonListItems.ListItems
@@ -24,7 +24,7 @@ class DetailsListAdapter(private val listItemPosition:Int) : RecyclerView.Adapte
     }
 
     fun addTodo(todo: DetailsTodoItem){
-        currentListItem.listOfTodos.add(todo)
+        currentListItem.listOfTodos.add(todo) //Add the _todo to the singleton
         notifyItemInserted(currentListItem.listOfTodos.size - 1)
     }
 
@@ -42,7 +42,7 @@ class DetailsListAdapter(private val listItemPosition:Int) : RecyclerView.Adapte
             tv_todo_title.text = currentlyClickedTodo.title
             cb_todo.isChecked = currentlyClickedTodo.isChecked
             toggleStrikeThrough(tv_todo_title, currentlyClickedTodo.isChecked)
-            cb_todo.setOnCheckedChangeListener { _, isChecked ->
+            cb_todo.setOnCheckedChangeListener { _, isChecked -> //Execute toggleStrikeThrough when the _todo checkbox changes.
                 toggleStrikeThrough(tv_todo_title, isChecked)
                 currentlyClickedTodo.isChecked = !currentlyClickedTodo.isChecked
             }

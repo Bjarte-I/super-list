@@ -21,9 +21,7 @@ class TodoListAdapter : RecyclerView.Adapter<TodoListAdapter.ListViewHolder>() {
     }
 
     fun addList(list: ListItem) {
-
         listItems.add(list)
-        // lists.add(list)
         notifyItemInserted(listItems.size - 1)
     }
 
@@ -32,10 +30,8 @@ class TodoListAdapter : RecyclerView.Adapter<TodoListAdapter.ListViewHolder>() {
             tv_todo_title.text = listItems[position].title
         }
 
-
         holder.itemView.button_delete.setOnClickListener {
             listItems.removeAt(position)
-            // listOfListItems.removeAt(position)
             notifyDataSetChanged()
         }
 
