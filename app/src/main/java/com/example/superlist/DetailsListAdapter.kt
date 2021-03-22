@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.superlist.models.DetailsTodoItem
+import kotlinx.android.synthetic.main.activity_details_list.view.*
 import kotlinx.android.synthetic.main.details_todo_list.view.*
-import kotlinx.android.synthetic.main.item_todo_list.view.*
-import kotlinx.android.synthetic.main.item_todo_list.view.tv_list_item_title
+import kotlinx.android.synthetic.main.item_todo_list.view.tv_todo_title
 
-class DetailsListAdapter(private val todos:MutableList<DetailsTodoItem>) : RecyclerView.Adapter<DetailsListAdapter.ListViewHolder>() {
+class DetailsListAdapter(private val listItemPosition:Int) : RecyclerView.Adapter<DetailsListAdapter.ListViewHolder>() {
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    private val listItems = ListItemsSingleton.singletonListItems.ListItems
+    private val currentListItem = listItems[listItemPosition]
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         return ListViewHolder(LayoutInflater.from(parent.context)
@@ -20,8 +24,8 @@ class DetailsListAdapter(private val todos:MutableList<DetailsTodoItem>) : Recyc
     }
 
     fun addTodo(todo: DetailsTodoItem){
-        todos.add(todo)
-        notifyItemInserted(todos.size - 1)
+        currentListItem.listOfTodos.add(todo)
+        notifyItemInserted(currentListItem.listOfTodos.size - 1)
     }
 
     private fun toggleStrikeThrough(tv_list_item_title: TextView, isChecked: Boolean){
@@ -33,25 +37,25 @@ class DetailsListAdapter(private val todos:MutableList<DetailsTodoItem>) : Recyc
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val curTodo = todos[position]
+        val currentlyClickedTodo = currentListItem.listOfTodos[position]
         holder.itemView.apply {
-            tv_list_item_title.text = curTodo.title
-            cb_todo.isChecked = curTodo.isChecked
-            toggleStrikeThrough(tv_list_item_title, curTodo.isChecked)
+            tv_todo_title.text = currentlyClickedTodo.title
+            cb_todo.isChecked = currentlyClickedTodo.isChecked
+            toggleStrikeThrough(tv_todo_title, currentlyClickedTodo.isChecked)
             cb_todo.setOnCheckedChangeListener { _, isChecked ->
-                toggleStrikeThrough(tv_list_item_title, isChecked)
-                curTodo.isChecked = !curTodo.isChecked
+                toggleStrikeThrough(tv_todo_title, isChecked)
+                currentlyClickedTodo.isChecked = !currentlyClickedTodo.isChecked
             }
-        }
 
-        holder.itemView.button_details_delete.setOnClickListener {
-            todos.removeAt(position)
-            notifyDataSetChanged()
+            button_details_delete.setOnClickListener {
+                currentListItem.listOfTodos.removeAt(position)
+                notifyDataSetChanged()
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return todos.size
+        return currentListItem.listOfTodos.size
     }
 
 }

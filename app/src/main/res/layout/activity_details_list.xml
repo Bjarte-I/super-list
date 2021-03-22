@@ -10,8 +10,17 @@
     android:paddingTop="18dp"
     android:paddingBottom="18dp">
 
+    <Button
+        android:id="@+id/button_details_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/pb_details_progress"
+        />
+
     <TextView
-        android:id="@+id/tv_list_details_title"
+        android:id="@+id/tv_todo_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
@@ -26,7 +35,7 @@
         android:layout_width="0dp"
         android:scaleY="2"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_list_details_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_todo_list_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />

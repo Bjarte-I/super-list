@@ -2,10 +2,11 @@ package com.example.superlist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.superlist.models.ListItem
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_todo_list.*
-import kotlinx.android.synthetic.main.item_todo_list.view.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        todoListAdapter = TodoListAdapter(mutableListOf())
+        todoListAdapter = TodoListAdapter()
 
         rv_list_container.adapter = todoListAdapter
         rv_list_container.layoutManager = LinearLayoutManager(this)
@@ -22,10 +23,11 @@ class MainActivity : AppCompatActivity() {
         button_create_list.setOnClickListener {
             val listTitle = et_todo_list_title.text.toString()
             if(listTitle.isNotEmpty()) {
-                val list = ListItem(listTitle)
+                val list = ListItem(listTitle, mutableListOf())
                 todoListAdapter.addList(list)
                 et_todo_list_title.text.clear()
             }
         }
+
     }
 }

@@ -5,5 +5,6 @@
     <string name="app_slogan">Your last list</string>
     <string name="delete">Delete</string>
     <string name="todo_title">Todo title</string>
-    <string name="create_todo">create todo</string>
+    <string name="create_todo">Create todo</string>
+    <string name="back">Back</string>
 </resources>
