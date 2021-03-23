@@ -2,7 +2,7 @@ package com.example.superlist.models
 
 import java.io.Serializable
 
-data class ListItem(
+data class TodoList(
     val title:String,
-    var listOfTodos:MutableList<DetailsTodoItem>
+    var listOfTodos:MutableList<Todo>
 ) : Serializable

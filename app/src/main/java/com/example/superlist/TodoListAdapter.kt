@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.superlist.models.ListItem
+import com.example.superlist.models.TodoList
 import kotlinx.android.synthetic.main.item_todo_list.view.*
 
 class TodoListAdapter : RecyclerView.Adapter<TodoListAdapter.ListViewHolder>() {
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    private val listItems = ListItemsSingleton.singletonListItems.ListItems
+    private val todoLists = TodoListsSingleton.SINGLETON_TODO_LISTS.todoLists
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         return ListViewHolder(LayoutInflater.from(parent.context)
@@ -20,31 +20,31 @@ class TodoListAdapter : RecyclerView.Adapter<TodoListAdapter.ListViewHolder>() {
         )
     }
 
-    fun addList(list: ListItem) {
-        listItems.add(list)
-        notifyItemInserted(listItems.size - 1)
+    fun addList(todoList: TodoList) {
+        todoLists.add(todoList)
+        notifyItemInserted(todoLists.size - 1)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.itemView.apply {
-            tv_todo_title.text = listItems[position].title
+            tv_todo_title.text = todoLists[position].title
         }
 
         holder.itemView.button_delete.setOnClickListener {
-            listItems.removeAt(position)
+            todoLists.removeAt(position)
             notifyDataSetChanged()
         }
 
         holder.itemView.setOnClickListener {
-            Intent(holder.itemView.context, DetailsListActivity::class.java).also {
-                it.putExtra("EXTRA_LIST_ITEM_POSITION", position)
+            Intent(holder.itemView.context, TodoDetailsActivity::class.java).also {
+                it.putExtra("EXTRA_LIST_POSITION", position)
                 startActivity(holder.itemView.context, it, null)
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return listItems.size
+        return todoLists.size
     }
 
 

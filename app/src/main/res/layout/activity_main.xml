@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".TodoListsActivity"
     android:padding="18dp">
 
     <TextView
@@ -51,17 +51,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_main_slogan"
-        app:layout_constraintBottom_toTopOf="@id/et_todo_list_title"
+        app:layout_constraintBottom_toTopOf="@id/et_list_title"
         />
 
     <EditText
-        android:id="@+id/et_todo_list_title"
+        android:id="@+id/et_list_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/list_title"
+        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/button_create_list"
-        />
+        android:autofillHints="list name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

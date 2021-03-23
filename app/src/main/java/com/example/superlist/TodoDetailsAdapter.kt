@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.superlist.models.DetailsTodoItem
-import kotlinx.android.synthetic.main.activity_details_list.view.*
+import com.example.superlist.models.Todo
 import kotlinx.android.synthetic.main.details_todo_list.view.*
 import kotlinx.android.synthetic.main.item_todo_list.view.tv_todo_title
 
-class DetailsListAdapter(listItemPosition:Int) : RecyclerView.Adapter<DetailsListAdapter.ListViewHolder>() {
+class TodoDetailsAdapter(listItemPosition:Int) : RecyclerView.Adapter<TodoDetailsAdapter.ListViewHolder>() {
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    private val listItems = ListItemsSingleton.singletonListItems.ListItems
+    private val listItems = TodoListsSingleton.SINGLETON_TODO_LISTS.todoLists
     private val currentListItem = listItems[listItemPosition]
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -23,7 +22,7 @@ class DetailsListAdapter(listItemPosition:Int) : RecyclerView.Adapter<DetailsLis
         )
     }
 
-    fun addTodo(todo: DetailsTodoItem){
+    fun addTodo(todo: Todo){
         currentListItem.listOfTodos.add(todo) //Add the _todo to the singleton
         notifyItemInserted(currentListItem.listOfTodos.size - 1)
     }

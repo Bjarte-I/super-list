@@ -2,7 +2,7 @@ package com.example.superlist.models
 
 import java.io.Serializable
 
-class DetailsTodoItem (
+class Todo (
         val title:String,
         var isChecked: Boolean
         ) : Serializable

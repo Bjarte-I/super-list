@@ -3,10 +3,10 @@ package com.example.superlist
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.superlist.models.ListItem
+import com.example.superlist.models.TodoList
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class TodoListsActivity : AppCompatActivity() {
 
     private lateinit var todoListAdapter: TodoListAdapter
 
@@ -19,11 +19,11 @@ class MainActivity : AppCompatActivity() {
         rv_list_container.layoutManager = LinearLayoutManager(this)
 
         button_create_list.setOnClickListener {
-            val listTitle = et_todo_list_title.text.toString()
-            if(listTitle.isNotEmpty()) {
-                val list = ListItem(listTitle, mutableListOf())
+            val todoListTitle = et_list_title.text.toString()
+            if(todoListTitle.isNotEmpty()) {
+                val list = TodoList(todoListTitle, mutableListOf())
                 todoListAdapter.addList(list)
-                et_todo_list_title.text.clear()
+                et_list_title.text.clear()
             }
         }
     }
