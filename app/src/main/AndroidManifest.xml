@@ -11,6 +11,7 @@
         android:theme="@style/Theme.SuperList">
         <activity android:name=".TodoDetailsActivity"></activity>
         <activity android:name=".TodoListsActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -16,8 +16,7 @@ class TodoListAdapter : RecyclerView.Adapter<TodoListAdapter.ListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         return ListViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_todo_list, parent, false)
-        )
+            .inflate(R.layout.item_todo_list, parent, false))
     }
 
     fun addList(todoList: TodoList) {
