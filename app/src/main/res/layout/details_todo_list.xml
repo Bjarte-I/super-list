@@ -2,11 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="80dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingStart="18dp"
     android:paddingEnd="18dp"
-    android:background="@android:drawable/editbox_background"
     >
 
     <TextView
@@ -17,12 +16,12 @@
         android:text="@string/app_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button_delete"
+        app:layout_constraintStart_toEndOf="@+id/cb_todo"
+        app:layout_constraintEnd_toStartOf="@id/button_details_delete"
         />
 
     <ImageButton
-        android:id="@+id/button_delete"
+        android:id="@+id/button_details_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,16 +30,13 @@
         android:src="@drawable/ic_delete"
         android:contentDescription="@string/delete" />
 
-    <ProgressBar
-        android:id="@+id/pb_list_progress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
+    <CheckBox
+        android:id="@+id/cb_todo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleY="2"
-        app:layout_constraintTop_toBottomOf="@id/tv_todo_title"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button_delete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
