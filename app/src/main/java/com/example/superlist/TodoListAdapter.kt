@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superlist.models.TodoList
 import kotlinx.android.synthetic.main.item_todo_list.view.*
+import java.lang.Math.floor
 
 class TodoListAdapter : RecyclerView.Adapter<TodoListAdapter.ListViewHolder>() {
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -27,18 +28,26 @@ class TodoListAdapter : RecyclerView.Adapter<TodoListAdapter.ListViewHolder>() {
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.itemView.apply {
             tv_todo_title.text = todoLists[position].title
-        }
 
-        holder.itemView.button_delete.setOnClickListener {
-            todoLists.removeAt(position)
-            notifyDataSetChanged()
-        }
-
-        holder.itemView.setOnClickListener {
-            Intent(holder.itemView.context, TodoDetailsActivity::class.java).also {
-                it.putExtra("EXTRA_LIST_POSITION", position)
-                startActivity(holder.itemView.context, it, null)
+            button_delete.setOnClickListener {
+                todoLists.removeAt(position)
+                notifyDataSetChanged()
             }
+
+            setOnClickListener {
+                Intent(holder.itemView.context, TodoDetailsActivity::class.java).also {
+                    it.putExtra("EXTRA_LIST_POSITION", position)
+                    startActivity(holder.itemView.context, it, null)
+                }
+            }
+
+            var checkedTodosCount = 0 //todo fix bug with checkboxes
+            for(todo in todoLists[position].listOfTodos){
+                if(todo.isChecked){
+                    checkedTodosCount++
+                }
+            }
+            pb_list_progress.progress = (checkedTodosCount * 100.0 / todoLists[position].listOfTodos.size).toInt()
         }
     }
 

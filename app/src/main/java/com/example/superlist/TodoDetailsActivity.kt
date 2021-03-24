@@ -1,12 +1,15 @@
 package com.example.superlist
 
+import android.app.LauncherActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.superlist.models.Todo
+import com.example.superlist.models.TodoList
 import kotlinx.android.synthetic.main.activity_todo_details.*
+import kotlinx.android.synthetic.main.activity_todo_details.view.*
 
 class TodoDetailsActivity : AppCompatActivity() {
 
@@ -17,6 +20,7 @@ class TodoDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todo_details)
+
         val listPosition:Int = intent.getIntExtra("EXTRA_LIST_POSITION", -1)
         //Retrieve the index position of the list we are in.
 
@@ -43,6 +47,9 @@ class TodoDetailsActivity : AppCompatActivity() {
                 et_details_todo_title.text.clear()
             }
         }
+    }
 
+    fun updateProgressBar(currentTodoList: TodoList){
+        pb_details_progress.progress = currentTodoList.progress
     }
 }
