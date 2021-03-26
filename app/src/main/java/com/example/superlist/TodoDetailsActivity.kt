@@ -5,44 +5,58 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.superlist.databinding.ActivityTodoDetailsBinding
 import com.example.superlist.models.Todo
+import com.example.superlist.models.TodoList
 import kotlinx.android.synthetic.main.activity_todo_details.*
 
 class TodoDetailsActivity : AppCompatActivity() {
 
-    private lateinit var todoDetailsAdapter: TodoDetailsAdapter
-    private val todoLists = TodoListsSingleton.SINGLETON_TODO_LISTS.todoLists
-    //All the lists that are added and stored in the singleton object.
+    private lateinit var binding: ActivityTodoDetailsBinding
+    private lateinit var todoList: TodoList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_todo_details)
-        val listPosition:Int = intent.getIntExtra("EXTRA_LIST_POSITION", -1)
-        //Retrieve the index position of the list we are in.
+        binding = ActivityTodoDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        todoDetailsAdapter = TodoDetailsAdapter(listPosition)
+        TodoListManager.instance.load()
 
-        rv_details_list_container.adapter = todoDetailsAdapter
-        rv_details_list_container.layoutManager = LinearLayoutManager(this)
+        val receivedTodoList = TodoListHolder.PickedTodoList
 
-        tv_todo_list_title.text = todoLists[listPosition].title
-
-        button_details_back.setOnClickListener {
-            Intent(this, TodoListsActivity::class.java).also {
-                ContextCompat.startActivity(this, it, null)
-                //Start the main activity
-            }
+        if(receivedTodoList != null){
+            todoList = receivedTodoList
+        } else {
+            finish()
         }
 
-        button_create_todo.setOnClickListener {
-            val todoTitle = et_details_todo_title.text.toString()
+        binding.rvDetailsListContainer.adapter = TodoDetailsAdapter(todoList.listOfTodos) //List that is displayed from the start
+        binding.rvDetailsListContainer.layoutManager = LinearLayoutManager(this)
+        binding.tvTodoListTitle.text = todoList.title
+
+        TodoListManager.instance.onTodos = {
+            (binding.rvDetailsListContainer.adapter as TodoDetailsAdapter).updateCollection(it)
+        }
+
+
+
+        binding.buttonDetailsBack.setOnClickListener {
+            val intent = Intent(this, TodoListsActivity::class.java)
+            startActivity(intent)
+            //Start the main activity
+        }
+
+        binding.buttonCreateTodo.setOnClickListener {
+            val todoTitle = binding.etDetailsTodoTitle.text.toString()
             if(todoTitle.isNotEmpty()) {
-                val todo = Todo(todoTitle, false)
-                todoDetailsAdapter.addTodo(todo)
-                //Add the todos through the recycler adapter
-                et_details_todo_title.text.clear()
+                addTodo(todoTitle)
+                binding.etDetailsTodoTitle.text.clear()
             }
         }
+    }
 
+    private fun addTodo(title: String){
+        val newTodo = Todo(title, false)
+        TodoListManager.instance.addTodo(newTodo, todoList)
     }
 }
