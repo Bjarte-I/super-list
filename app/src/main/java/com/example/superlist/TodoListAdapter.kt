@@ -1,14 +1,10 @@
 package com.example.superlist
 
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superlist.databinding.ItemTodoListBinding
 import com.example.superlist.models.TodoList
-import kotlinx.android.synthetic.main.item_todo_list.view.*
 
 class TodoListAdapter(private var todoLists:List<TodoList>, private val onTodoListClicked:(TodoList) -> Unit) : RecyclerView.Adapter<TodoListAdapter.ViewHolder>() {
     class ViewHolder(val binding:ItemTodoListBinding):RecyclerView.ViewHolder(binding.root) {
@@ -29,7 +25,7 @@ class TodoListAdapter(private var todoLists:List<TodoList>, private val onTodoLi
         return ViewHolder(ItemTodoListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    public fun updateCollection(newTodoLists:List<TodoList>){
+    fun updateCollection(newTodoLists:List<TodoList>) {
         todoLists = newTodoLists
         notifyDataSetChanged()
     }
@@ -40,16 +36,4 @@ class TodoListAdapter(private var todoLists:List<TodoList>, private val onTodoLi
         val todoList = todoLists[position]
         holder.bind(todoList, onTodoListClicked)
     }
-
-        /*holder.itemView.button_delete.setOnClickListener {
-            todoLists.removeAt(position)
-            notifyDataSetChanged()
-        }
-
-        holder.itemView.setOnClickListener {
-            Intent(holder.itemView.context, TodoDetailsActivity::class.java).also {
-                it.putExtra("EXTRA_LIST_POSITION", position)
-                startActivity(holder.itemView.context, it, null)
-            }
-        }*/
 }

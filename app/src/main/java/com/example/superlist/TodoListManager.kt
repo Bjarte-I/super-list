@@ -8,22 +8,12 @@ class TodoListManager {
 
     var onTodoLists: ((List<TodoList>) -> Unit)? = null
     var onTodos: ((List<Todo>) -> Unit)? = null
-    var onTodoListUpdate: ((todoList: TodoList) -> Unit)? = null
 
     fun load() {
         if (!this::todoListCollection.isInitialized){
             todoListCollection = mutableListOf()
         }
         onTodoLists?.invoke(todoListCollection) // Update the collection.
-    }
-
-    fun updateTodoList(todoList: TodoList) {
-        onTodoListUpdate?.invoke(todoList)
-    }
-
-    fun updateTodos(todoList: TodoList) {
-        val currentTodoIndex = todoListCollection.indexOf(todoList)
-        onTodos?.invoke(todoListCollection[currentTodoIndex].listOfTodos)
     }
 
     fun addTodoList(todoList: TodoList) {
@@ -36,13 +26,13 @@ class TodoListManager {
         onTodoLists?.invoke(todoListCollection)
     }
 
-    fun addTodo(todo: Todo, todoList: TodoList){
+    fun addTodo(todo: Todo, todoList: TodoList) {
         val currentTodoIndex = todoListCollection.indexOf(todoList)
         todoListCollection[currentTodoIndex].listOfTodos.add(todo)
         onTodos?.invoke(todoListCollection[currentTodoIndex].listOfTodos)
     }
 
-    fun removeTodo(todo: Todo, todoList: TodoList){
+    fun removeTodo(todo: Todo, todoList: TodoList) {
         val currentTodoIndex = todoListCollection.indexOf(todoList)
         todoListCollection[currentTodoIndex].listOfTodos.remove(todo)
         onTodos?.invoke(todoListCollection[currentTodoIndex].listOfTodos)

@@ -56,7 +56,7 @@ class TodoDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun addTodo(title: String){
+    private fun addTodo(title: String) {
         val newTodo = Todo(title, false)
         TodoListManager.instance.addTodo(newTodo, todoList)
     }

@@ -1,17 +1,12 @@
 package com.example.superlist
 
-import android.content.Intent
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superlist.databinding.DetailsTodoListBinding
 import com.example.superlist.models.Todo
-import com.example.superlist.models.TodoList
-import kotlinx.android.synthetic.main.details_todo_list.view.*
-import kotlinx.android.synthetic.main.item_todo_list.view.tv_list_title
 
 class TodoDetailsAdapter(private var todos:List<Todo>) : RecyclerView.Adapter<TodoDetailsAdapter.ViewHolder>() {
 
@@ -49,7 +44,7 @@ class TodoDetailsAdapter(private var todos:List<Todo>) : RecyclerView.Adapter<To
         return ViewHolder(DetailsTodoListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    public fun updateCollection(newTodos:List<Todo>){
+    fun updateCollection(newTodos:List<Todo>){
         todos = newTodos
         notifyDataSetChanged()
     }
