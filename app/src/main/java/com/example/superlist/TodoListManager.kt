@@ -14,7 +14,7 @@ class TodoListManager {
         if (!this::todoListCollection.isInitialized){
             todoListCollection = mutableListOf()
         }
-        onTodoLists?.invoke(todoListCollection) // Update the displayed list.
+        onTodoLists?.invoke(todoListCollection) // Update the collection.
     }
 
     fun updateTodoList(todoList: TodoList) {
@@ -46,6 +46,16 @@ class TodoListManager {
         val currentTodoIndex = todoListCollection.indexOf(todoList)
         todoListCollection[currentTodoIndex].listOfTodos.remove(todo)
         onTodos?.invoke(todoListCollection[currentTodoIndex].listOfTodos)
+    }
+
+    fun calculateListProgress(todoList: TodoList) : Int {
+        var isCheckedCount = 0
+        for(todo in todoList.listOfTodos){
+            if(todo.isChecked) {
+                isCheckedCount++
+            }
+        }
+        return (100.0 * isCheckedCount / todoList.listOfTodos.size).toInt()
     }
 
     companion object {

@@ -14,6 +14,8 @@ class TodoListAdapter(private var todoLists:List<TodoList>, private val onTodoLi
     class ViewHolder(val binding:ItemTodoListBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(todoList: TodoList, onTodoListClicked: (TodoList) -> Unit) {
             binding.tvListTitle.text = todoList.title
+            val progress:Int = TodoListManager.instance.calculateListProgress(todoList)
+            binding.pbListProgress.progress = progress
             binding.buttonDelete.setOnClickListener {
                 TodoListManager.instance.removeTodoList(todoList)
             }

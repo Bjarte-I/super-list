@@ -43,7 +43,6 @@ class TodoListsActivity : AppCompatActivity() {
                 ipm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
             }
         }
-
     }
 
     private fun addTodoList(title:String){

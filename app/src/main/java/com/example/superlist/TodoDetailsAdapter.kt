@@ -1,9 +1,11 @@
 package com.example.superlist
 
+import android.content.Intent
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superlist.databinding.DetailsTodoListBinding
 import com.example.superlist.models.Todo
@@ -23,6 +25,8 @@ class TodoDetailsAdapter(private var todos:List<Todo>) : RecyclerView.Adapter<To
             binding.cbTodo.setOnCheckedChangeListener { _, isChecked -> //Execute toggleStrikeThrough when the _todo checkbox changes.
                 toggleStrikeThrough(binding.tvTodoTitle, isChecked)
                 todo.isChecked = !todo.isChecked
+
+                //todo update progress bar somehow
             }
             binding.buttonDetailsDelete.setOnClickListener {
                 val receivedTodoList = TodoListHolder.PickedTodoList
@@ -48,10 +52,6 @@ class TodoDetailsAdapter(private var todos:List<Todo>) : RecyclerView.Adapter<To
     public fun updateCollection(newTodos:List<Todo>){
         todos = newTodos
         notifyDataSetChanged()
-        /*val receivedTodoList = TodoListHolder.PickedTodoList
-        if(receivedTodoList != null){
-            TodoListManager.instance.updateTodos(receivedTodoList)
-        }*/
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
