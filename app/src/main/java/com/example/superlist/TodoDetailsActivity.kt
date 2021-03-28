@@ -38,7 +38,7 @@ class TodoDetailsActivity : AppCompatActivity() {
             (binding.rvDetailsListContainer.adapter as TodoDetailsAdapter).updateCollection(it)
         }
 
-
+        updateListProgressBar()
 
         binding.buttonDetailsBack.setOnClickListener {
             val intent = Intent(this, TodoListsActivity::class.java)
@@ -51,12 +51,21 @@ class TodoDetailsActivity : AppCompatActivity() {
             if(todoTitle.isNotEmpty()) {
                 addTodo(todoTitle)
                 binding.etDetailsTodoTitle.text.clear()
+                updateListProgressBar()
             }
         }
     }
 
-    private fun addTodo(title: String){
+    private fun addTodo(title: String) {
         val newTodo = Todo(title, false)
         TodoListManager.instance.addTodo(newTodo, todoList)
+    }
+
+    private fun updateListProgressBar() {
+        val pickedTodoList = TodoListHolder.PickedTodoList
+        if(pickedTodoList != null) {
+            val progress: Int = TodoListManager.instance.calculateListProgress(pickedTodoList)
+            binding.pbDetailsProgress.progress = progress
+        }
     }
 }

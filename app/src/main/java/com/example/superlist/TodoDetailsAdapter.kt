@@ -7,9 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superlist.databinding.DetailsTodoListBinding
 import com.example.superlist.models.Todo
-import com.example.superlist.models.TodoList
-import kotlinx.android.synthetic.main.details_todo_list.view.*
-import kotlinx.android.synthetic.main.item_todo_list.view.tv_list_title
 
 class TodoDetailsAdapter(private var todos:List<Todo>) : RecyclerView.Adapter<TodoDetailsAdapter.ViewHolder>() {
 
@@ -23,6 +20,8 @@ class TodoDetailsAdapter(private var todos:List<Todo>) : RecyclerView.Adapter<To
             binding.cbTodo.setOnCheckedChangeListener { _, isChecked -> //Execute toggleStrikeThrough when the _todo checkbox changes.
                 toggleStrikeThrough(binding.tvTodoTitle, isChecked)
                 todo.isChecked = !todo.isChecked
+
+                //todo update progress bar somehow
             }
             binding.buttonDetailsDelete.setOnClickListener {
                 val receivedTodoList = TodoListHolder.PickedTodoList
@@ -45,13 +44,9 @@ class TodoDetailsAdapter(private var todos:List<Todo>) : RecyclerView.Adapter<To
         return ViewHolder(DetailsTodoListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    public fun updateCollection(newTodos:List<Todo>){
+    fun updateCollection(newTodos:List<Todo>){
         todos = newTodos
         notifyDataSetChanged()
-        /*val receivedTodoList = TodoListHolder.PickedTodoList
-        if(receivedTodoList != null){
-            TodoListManager.instance.updateTodos(receivedTodoList)
-        }*/
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -43,15 +43,14 @@ class TodoListsActivity : AppCompatActivity() {
                 ipm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
             }
         }
-
     }
 
-    private fun addTodoList(title:String){
+    private fun addTodoList(title:String) {
         val newTodoList = TodoList(title, mutableListOf())
         TodoListManager.instance.addTodoList(newTodoList)
     }
 
-    private fun onBookClicked(todoList: TodoList) : Unit{
+    private fun onBookClicked(todoList: TodoList) {
         TodoListHolder.PickedTodoList = todoList
 
         val intent = Intent(this, TodoDetailsActivity::class.java)
