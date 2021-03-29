@@ -13,7 +13,7 @@ class TodoListAdapter(private var todoLists:List<TodoList>, private val onTodoLi
             val progress:Int = TodoListManager.instance.calculateListProgress(todoList)
             binding.pbListProgress.progress = progress
             binding.buttonDelete.setOnClickListener {
-                TodoListManager.instance.removeTodoList(todoList)
+                TodoListManager.instance.removeTodoList(todoList, binding.root.context)
             }
             binding.clList.setOnClickListener {
                 onTodoListClicked(todoList)

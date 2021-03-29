@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.superlist.databinding.ActivityTodoDetailsBinding
 import com.example.superlist.models.Todo
 import com.example.superlist.models.TodoList
+import com.example.superlist.util.getPickedTodoList
 import kotlinx.android.synthetic.main.activity_todo_details.*
 
 class TodoDetailsActivity : AppCompatActivity() {
@@ -22,15 +23,9 @@ class TodoDetailsActivity : AppCompatActivity() {
 
         TodoListManager.instance.load()
 
-        val receivedTodoList = TodoListHolder.PickedTodoList
+        todoList = getPickedTodoList()
 
-        if(receivedTodoList != null){
-            todoList = receivedTodoList
-        } else {
-            finish()
-        }
-
-        binding.rvDetailsListContainer.adapter = TodoDetailsAdapter(todoList.listOfTodos) //List that is displayed from the start
+        binding.rvDetailsListContainer.adapter = TodoDetailsAdapter(todoList.listOfTodos, this::onTodoClicked) //List that is displayed from the start
         binding.rvDetailsListContainer.layoutManager = LinearLayoutManager(this)
         binding.tvTodoListTitle.text = todoList.title
 
@@ -56,16 +51,20 @@ class TodoDetailsActivity : AppCompatActivity() {
         }
     }
 
+    private fun onTodoClicked(todo: Todo) {
+        TodoListManager.instance.updateTodo(todo, binding.root.context)
+        binding.pbDetailsProgress.progress  = TodoListManager.instance.calculateListProgress(
+            getPickedTodoList())
+        todo.isChecked = !todo.isChecked
+    }
+
     private fun addTodo(title: String) {
         val newTodo = Todo(title, false)
-        TodoListManager.instance.addTodo(newTodo, todoList)
+        TodoListManager.instance.addTodo(newTodo, this)
     }
 
     private fun updateListProgressBar() {
-        val pickedTodoList = TodoListHolder.PickedTodoList
-        if(pickedTodoList != null) {
-            val progress: Int = TodoListManager.instance.calculateListProgress(pickedTodoList)
-            binding.pbDetailsProgress.progress = progress
-        }
+        val progress: Int = TodoListManager.instance.calculateListProgress(getPickedTodoList())
+        binding.pbDetailsProgress.progress = progress
     }
 }

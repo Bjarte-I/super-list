@@ -7,27 +7,23 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superlist.databinding.DetailsTodoListBinding
 import com.example.superlist.models.Todo
+import com.example.superlist.models.TodoList
 
-class TodoDetailsAdapter(private var todos:List<Todo>) : RecyclerView.Adapter<TodoDetailsAdapter.ViewHolder>() {
+class TodoDetailsAdapter(private var todos:List<Todo>, private val onTodoClicked:(Todo) -> Unit) : RecyclerView.Adapter<TodoDetailsAdapter.ViewHolder>() {
 
 
 
     class ViewHolder(val binding:DetailsTodoListBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(todo: Todo){
+        fun bind(todo: Todo, onTodoClicked: (Todo) -> Unit){
             binding.tvTodoTitle.text = todo.title
             binding.cbTodo.isChecked = todo.isChecked
             toggleStrikeThrough(binding.tvTodoTitle, todo.isChecked)
             binding.cbTodo.setOnCheckedChangeListener { _, isChecked -> //Execute toggleStrikeThrough when the _todo checkbox changes.
                 toggleStrikeThrough(binding.tvTodoTitle, isChecked)
-                todo.isChecked = !todo.isChecked
-
-                //todo update progress bar somehow
+                onTodoClicked(todo)
             }
             binding.buttonDetailsDelete.setOnClickListener {
-                val receivedTodoList = TodoListHolder.PickedTodoList
-                if(receivedTodoList != null){
-                    TodoListManager.instance.removeTodo(todo, receivedTodoList)
-                }
+                TodoListManager.instance.removeTodo(todo, binding.root.context)
             }
         }
 
@@ -51,7 +47,7 @@ class TodoDetailsAdapter(private var todos:List<Todo>) : RecyclerView.Adapter<To
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val todo = todos[position]
-        holder.bind(todo)
+        holder.bind(todo, onTodoClicked)
     }
 
     override fun getItemCount(): Int {

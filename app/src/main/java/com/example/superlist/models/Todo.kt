@@ -4,7 +4,8 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Todo (
-        val title:String,
-        var isChecked: Boolean
-        ) : Parcelable
+data class Todo (val title:String, var isChecked: Boolean) : Parcelable {
+        override fun toString(): String {
+                return "$title, $isChecked"
+                }
+        }
