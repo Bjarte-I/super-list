@@ -3,13 +3,11 @@ package com.example.superlist
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.superlist.databinding.ActivityTodoDetailsBinding
 import com.example.superlist.models.Todo
 import com.example.superlist.models.TodoList
 import com.example.superlist.util.getPickedTodoList
-import kotlinx.android.synthetic.main.activity_todo_details.*
 
 class TodoDetailsActivity : AppCompatActivity() {
 
@@ -25,7 +23,7 @@ class TodoDetailsActivity : AppCompatActivity() {
 
         todoList = getPickedTodoList()
 
-        binding.rvDetailsListContainer.adapter = TodoDetailsAdapter(todoList.listOfTodos, this::onTodoClicked) //List that is displayed from the start
+        binding.rvDetailsListContainer.adapter = TodoDetailsAdapter(todoList.listOfTodos, this::onCheckboxChanged, this::onDeleteClicked) //List that is displayed from the start
         binding.rvDetailsListContainer.layoutManager = LinearLayoutManager(this)
         binding.tvTodoListTitle.text = todoList.title
 
@@ -51,11 +49,14 @@ class TodoDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun onTodoClicked(todo: Todo) {
+    private fun onDeleteClicked(todo: Todo) {
+        TodoListManager.instance.removeTodo(todo, binding.root.context)
+        updateListProgressBar()
+    }
+
+    private fun onCheckboxChanged(todo: Todo) {
         TodoListManager.instance.updateTodo(todo, binding.root.context)
-        binding.pbDetailsProgress.progress  = TodoListManager.instance.calculateListProgress(
-            getPickedTodoList())
-        todo.isChecked = !todo.isChecked
+            updateListProgressBar()
     }
 
     private fun addTodo(title: String) {

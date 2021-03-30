@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.superlist.databinding.ActivityMainBinding
+import com.example.superlist.models.Todo
 import com.example.superlist.models.TodoList
 
 class TodoListHolder {

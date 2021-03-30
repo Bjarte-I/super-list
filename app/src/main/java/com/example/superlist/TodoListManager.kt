@@ -51,39 +51,6 @@ class TodoListManager {
         }
     }
 
-    fun addTodoList(todoList: TodoList, context: Context) {
-        todoListCollection.add(todoList)
-        updateDatabase(context)
-        onTodoLists?.invoke(todoListCollection)
-    }
-
-    fun removeTodoList(todoList: TodoList, context: Context) {
-        todoListCollection.remove(todoList)
-        updateDatabase(context)
-        onTodoLists?.invoke(todoListCollection)
-    }
-
-    fun addTodo(todo: Todo, context: Context) {
-        val todoList = getPickedTodoList()
-        val todoListIndex = todoListCollection.indexOf(todoList)
-        todoListCollection[todoListIndex].listOfTodos.add(todo)
-        updateDatabase(context)
-        onTodos?.invoke(todoListCollection[todoListIndex].listOfTodos)
-        TodoListHolder.PickedTodoList = todoListCollection[todoListIndex] //Update the pickedTodo to include the newest version. If not updated, will cause out of bound with the indexOf method.
-    }
-
-    fun getCollection(): MutableList<TodoList> {
-        return todoListCollection
-    }
-
-    fun updateTodo(todo:Todo, context: Context) {
-        val index = getPickedTodoListIndex()
-        val todoIndex = todoListCollection[index].listOfTodos.indexOf(todo)
-        todoListCollection[index].listOfTodos[todoIndex].isChecked = !todo.isChecked
-        updateDatabase(context)
-        TodoListHolder.PickedTodoList = todoListCollection[index]
-    }
-
     private fun updateDatabase(context: Context) {
         val content = Gson().toJson(todoListCollection)
 
@@ -99,6 +66,45 @@ class TodoListManager {
             val ref = FirebaseStorage.getInstance().reference.child("Lists/${file.lastPathSegment}")
             ref.putFile(file)
         }
+    }
+
+    fun addTodoList(todoList: TodoList, context: Context) {
+        todoListCollection.add(todoList)
+        updateDatabase(context)
+        onTodoLists?.invoke(todoListCollection)
+    }
+
+    fun removeTodoList(todoList: TodoList, context: Context) {
+        todoListCollection.remove(todoList)
+        updateDatabase(context)
+        onTodoLists?.invoke(todoListCollection)
+    }
+
+    fun addTodo(todo: Todo, context: Context) {
+        val todoListIndex = getPickedTodoListIndex()
+        todoListCollection[todoListIndex].listOfTodos.add(todo)
+        TodoListHolder.PickedTodoList = todoListCollection[todoListIndex] //Update the pickedTodo to include the newest version. If not updated, will cause out of bound with the indexOf method.
+        updateDatabase(context)
+        onTodos?.invoke(todoListCollection[todoListIndex].listOfTodos)
+    }
+
+    fun getCollection(): MutableList<TodoList> {
+        return todoListCollection
+    }
+
+    fun updateTodo(todo:Todo, context: Context) {
+        val index = getPickedTodoListIndex()
+        val todoIndex = todoListCollection[index].listOfTodos.indexOf(todo)
+        if(todoIndex == -1) {
+            Log.d("MANAGER - UPDATE TODO", "Index is out of bounds")
+            return
+        }
+        val todoInCollection:Todo = todoListCollection[index].listOfTodos[todoIndex]
+        todoInCollection.isChecked = !todoInCollection.isChecked //Update both the collection and the individual _todo
+        todo.isChecked = todoInCollection.isChecked
+        updateDatabase(context)
+        TodoListHolder.PickedTodoList = todoListCollection[index] //TODO: crashes when changing checkbox and then removing that todo
+        Log.d("MANAGER", "running")
     }
 
     fun removeTodo(todo: Todo, context:Context) {
