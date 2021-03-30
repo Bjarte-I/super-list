@@ -18,6 +18,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+
     buildFeatures{
         viewBinding true
     }
@@ -53,5 +57,8 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    testImplementation "com.google.truth:truth:1.1.2"
+    androidTestImplementation "com.google.truth:truth:1.1.2"
 }
 apply plugin: 'com.google.gms.google-services'
