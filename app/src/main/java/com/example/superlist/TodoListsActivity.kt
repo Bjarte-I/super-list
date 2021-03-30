@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.superlist.databinding.ActivityMainBinding
+import com.example.superlist.models.Todo
 import com.example.superlist.models.TodoList
-import kotlinx.android.synthetic.main.activity_main.*
 
 class TodoListHolder {
     companion object{
@@ -20,19 +20,20 @@ class TodoListsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.rvListContainer.layoutManager = LinearLayoutManager(this)
-        binding.rvListContainer.adapter = TodoListAdapter(emptyList<TodoList>(), this::onBookClicked)
+        TodoListManager.instance.load()
+        val todoLists = TodoListManager.instance.getCollection()
+        binding.rvListContainer.adapter = TodoListAdapter(todoLists, this::onTodoListClicked)
 
         TodoListManager.instance.onTodoLists = {
             (binding.rvListContainer.adapter as TodoListAdapter).updateCollection(it)
         }
-
-        TodoListManager.instance.load()
 
         binding.buttonCreateList.setOnClickListener {
             val todoListTitle = binding.etListTitle.text.toString()
@@ -47,10 +48,10 @@ class TodoListsActivity : AppCompatActivity() {
 
     private fun addTodoList(title:String) {
         val newTodoList = TodoList(title, mutableListOf())
-        TodoListManager.instance.addTodoList(newTodoList)
+        TodoListManager.instance.addTodoList(newTodoList, this)
     }
 
-    private fun onBookClicked(todoList: TodoList) {
+    private fun onTodoListClicked(todoList: TodoList) {
         TodoListHolder.PickedTodoList = todoList
 
         val intent = Intent(this, TodoDetailsActivity::class.java)

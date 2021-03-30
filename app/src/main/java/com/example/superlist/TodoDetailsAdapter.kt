@@ -8,26 +8,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.superlist.databinding.DetailsTodoListBinding
 import com.example.superlist.models.Todo
 
-class TodoDetailsAdapter(private var todos:List<Todo>) : RecyclerView.Adapter<TodoDetailsAdapter.ViewHolder>() {
+class TodoDetailsAdapter(private var todos: List<Todo>, private val onCheckboxChanged: (Todo) -> Unit, private val onDeleteClicked: (Todo) -> Unit) : RecyclerView.Adapter<TodoDetailsAdapter.ViewHolder>() {
 
 
 
     class ViewHolder(val binding:DetailsTodoListBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(todo: Todo){
+        fun bind(todo: Todo, onCheckboxChanged: (Todo) -> Unit, onDeleteClicked: (Todo) -> Unit){
             binding.tvTodoTitle.text = todo.title
             binding.cbTodo.isChecked = todo.isChecked
             toggleStrikeThrough(binding.tvTodoTitle, todo.isChecked)
-            binding.cbTodo.setOnCheckedChangeListener { _, isChecked -> //Execute toggleStrikeThrough when the _todo checkbox changes.
-                toggleStrikeThrough(binding.tvTodoTitle, isChecked)
-                todo.isChecked = !todo.isChecked
-
-                //todo update progress bar somehow
+            binding.cbTodo.setOnClickListener {  //setOnCheckedChangeListener would not only trigger on the checkbox changing, but also when I removed a _todo after changing a checkbox above the one I was deleting for some reason.
+                onCheckboxChanged(todo)
+                toggleStrikeThrough(binding.tvTodoTitle, todo.isChecked)
             }
             binding.buttonDetailsDelete.setOnClickListener {
-                val receivedTodoList = TodoListHolder.PickedTodoList
-                if(receivedTodoList != null){
-                    TodoListManager.instance.removeTodo(todo, receivedTodoList)
-                }
+                onDeleteClicked(todo)
             }
         }
 
@@ -51,7 +46,7 @@ class TodoDetailsAdapter(private var todos:List<Todo>) : RecyclerView.Adapter<To
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val todo = todos[position]
-        holder.bind(todo)
+        holder.bind(todo, onCheckboxChanged, onDeleteClicked)
     }
 
     override fun getItemCount(): Int {
