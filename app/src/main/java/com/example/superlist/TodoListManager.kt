@@ -103,7 +103,7 @@ class TodoListManager {
         todoInCollection.isChecked = !todoInCollection.isChecked //Update both the collection and the individual _todo
         todo.isChecked = todoInCollection.isChecked
         updateDatabase(context)
-        TodoListHolder.PickedTodoList = todoListCollection[index] //TODO: crashes when changing checkbox and then removing that todo
+        TodoListHolder.PickedTodoList = todoListCollection[index]
         Log.d("MANAGER", "running")
     }
 
