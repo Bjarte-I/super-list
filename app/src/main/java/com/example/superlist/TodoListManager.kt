@@ -68,7 +68,7 @@ class TodoListManager {
         }
     }
 
-    fun removeAllLists(context: Context) {
+    fun removeAllLists(context: Context) { // Only used in testing
         todoListCollection = mutableListOf()
         updateDatabase(context)
         onTodoLists?.invoke(todoListCollection)
@@ -85,6 +85,12 @@ class TodoListManager {
         updateDatabase(context)
         onTodoLists?.invoke(todoListCollection)
     }
+
+    /*fun updateTodoList(oldTodoList: TodoList, context: Context) {
+        val newTodoList = TodoListHolder.PickedTodoList
+        val index = todoListCollection.indexOf(oldTodoList)
+        todoListCollection[index].listOfTodos.
+    }*/
 
     fun addTodo(todo: Todo, context: Context) {
         val todoListIndex = getPickedTodoListIndex()
@@ -129,6 +135,12 @@ class TodoListManager {
             }
         }
         return (100.0 * isCheckedCount / todoList.listOfTodos.size).toInt()
+    }
+
+    fun updateTodoSequence(todoListIndex: Int, context: Context) {
+        val updatedTodoList = todoListCollection[todoListIndex]
+        TodoListHolder.PickedTodoList = updatedTodoList
+        updateDatabase(context)
     }
 
     companion object {
