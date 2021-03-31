@@ -3,6 +3,7 @@ package com.example.superlist
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Switch
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,7 +55,7 @@ class TodoDetailsActivity : AppCompatActivity() {
             }
         }
 
-        val touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
+        val touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -73,7 +74,11 @@ class TodoDetailsActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                TODO("Not yet implemented")
+                if(direction == ItemTouchHelper.RIGHT) {
+                    TodoListManager.instance.removeTodoAt(viewHolder.adapterPosition, this@TodoDetailsActivity)
+                    adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                    updateListProgressBar()
+                }
             }
 
         })

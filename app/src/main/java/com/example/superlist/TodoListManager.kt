@@ -119,6 +119,14 @@ class TodoListManager {
         Log.d("MANAGER", "running")
     }
 
+    fun removeTodoAt(index: Int, context: Context) {
+        val todoListIndex = getPickedTodoListIndex()
+        todoListCollection[todoListIndex].listOfTodos.removeAt(index)
+        updateDatabase(context)
+        onTodos?.invoke(todoListCollection[todoListIndex].listOfTodos)
+        TodoListHolder.PickedTodoList = todoListCollection[todoListIndex]
+    }
+
     fun removeTodo(todo: Todo, context:Context) {
         val index = getPickedTodoListIndex()
         todoListCollection[index].listOfTodos.remove(todo)
