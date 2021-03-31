@@ -68,6 +68,12 @@ class TodoListManager {
         }
     }
 
+    fun removeAllLists(context: Context) {
+        todoListCollection = mutableListOf()
+        updateDatabase(context)
+        onTodoLists?.invoke(todoListCollection)
+    }
+
     fun addTodoList(todoList: TodoList, context: Context) {
         todoListCollection.add(todoList)
         updateDatabase(context)

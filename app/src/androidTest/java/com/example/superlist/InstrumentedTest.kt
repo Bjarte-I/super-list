@@ -18,7 +18,7 @@ import org.junit.runner.RunWith
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class InstrumentedTest {
     @Test
     fun useAppContext() {
         // Context of the app under test.
@@ -85,6 +85,18 @@ class ExampleInstrumentedTest {
             removeTodo(myTodo, appContext)
         }
         assertThat(TodoListManager.instance.getCollection()[listItemIndex].listOfTodos).doesNotContain(myTodo)
+    }
+
+    @Test
+    fun removeAllLists_isCorrect() {
+        val myTodoList = TodoList("Numbers", mutableListOf())
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        TodoListManager.instance.apply {
+            load()
+            addTodoList(myTodoList, appContext)
+            removeAllLists(appContext)
+        }
+        assertThat(TodoListManager.instance.getCollection().size == 0)
     }
 
     @Test
