@@ -2,6 +2,7 @@ package com.example.superlist
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.runner.intent.IntentStubberRegistry
 import com.example.superlist.models.Todo
 import com.example.superlist.models.TodoList
 import com.example.superlist.util.getPickedTodoListIndex
@@ -116,5 +117,22 @@ class InstrumentedTest {
             updateTodo(myTodo, appContext)
         }
         assertThat(TodoListManager.instance.getCollection()[listItemIndex].listOfTodos).contains(expected)
+    }
+
+    @Test
+    fun renameList_isCorrect() {
+        val myTodoList = TodoList("Numbers", mutableListOf(Todo("1", true), Todo("2", false)))
+        val newTitle = "Nums"
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val listIndex:Int
+        TodoListManager.instance.apply {
+            if(!getCollection().contains(myTodoList)){
+                addTodoList(myTodoList, appContext)
+            }
+            TodoListHolder.PickedTodoList = myTodoList
+            renameList(newTitle, appContext)
+            listIndex = getPickedTodoListIndex()
+        }
+        assertThat(TodoListManager.instance.getCollection()[listIndex].title).isEqualTo(newTitle)
     }
 }

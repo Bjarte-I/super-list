@@ -19,14 +19,26 @@
         app:layout_constraintBottom_toTopOf="@id/pb_details_progress"
         />
 
-    <TextView
-        android:id="@+id/tv_todo_list_title"
+    <EditText
+        android:id="@+id/et_todo_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="25sp"
+        android:autofillHints="rename"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/button_rename_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/button_details_back"
+        app:layout_constraintTop_toTopOf="@id/button_details_back"
+        android:text="@string/rename_text"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
         />
 
     <ProgressBar
@@ -35,7 +47,7 @@
         android:layout_width="0dp"
         android:scaleY="2"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_todo_list_title"
+        app:layout_constraintTop_toBottomOf="@id/et_todo_list_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />

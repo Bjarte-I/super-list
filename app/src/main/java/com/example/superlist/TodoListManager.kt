@@ -86,6 +86,13 @@ class TodoListManager {
         onTodoLists?.invoke(todoListCollection)
     }
 
+    fun renameList(newTitle:String, context: Context) {
+        val todoListIndex = getPickedTodoListIndex()
+        todoListCollection[todoListIndex].title = newTitle
+        updateDatabase(context)
+        TodoListHolder.PickedTodoList = todoListCollection[todoListIndex]
+    }
+
     /*fun updateTodoList(oldTodoList: TodoList, context: Context) {
         val newTodoList = TodoListHolder.PickedTodoList
         val index = todoListCollection.indexOf(oldTodoList)

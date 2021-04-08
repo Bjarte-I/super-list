@@ -1,9 +1,12 @@
 package com.example.superlist
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import android.widget.Switch
+import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,7 +35,7 @@ class TodoDetailsActivity : AppCompatActivity() {
         adapter = TodoDetailsAdapter(todoList.listOfTodos, this::onCheckboxChanged, this::onDeleteClicked)
         binding.rvDetailsListContainer.adapter = adapter
         binding.rvDetailsListContainer.layoutManager = LinearLayoutManager(this)
-        binding.tvTodoListTitle.text = todoList.title
+        binding.etTodoListTitle.setText(todoList.title)
 
         TodoListManager.instance.onTodos = {
             (binding.rvDetailsListContainer.adapter as TodoDetailsAdapter).updateCollection(it)
@@ -44,6 +47,17 @@ class TodoDetailsActivity : AppCompatActivity() {
             val intent = Intent(this, TodoListsActivity::class.java)
             startActivity(intent)
             //Start the main activity
+        }
+
+        binding.buttonRenameList.setOnClickListener {
+            val newListTitle:String = binding.etTodoListTitle.text.toString()
+            if(newListTitle != "" && newListTitle != todoList.title) {
+                TodoListManager.instance.renameList(newListTitle, this)
+                val toast = Toast.makeText(applicationContext, "Changed the list name", Toast.LENGTH_LONG)
+                val ipm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                ipm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+                toast.show()
+            }
         }
 
         binding.buttonCreateTodo.setOnClickListener {
